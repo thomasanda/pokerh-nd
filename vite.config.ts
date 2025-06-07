@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 import vike from "vike/plugin";
 
 export default defineConfig({
-  plugins: [vike(), react({}), tailwindcss()],
+  plugins: [!process.env.VITEST && vike(), react({}), tailwindcss()],
 
   build: {
     target: "es2022",

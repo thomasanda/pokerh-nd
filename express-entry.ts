@@ -2,18 +2,21 @@ import "dotenv/config";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { createTodoHandler } from "./server/create-todo-handler";
+import { createNewHandHandler } from "./server/pokerHandlers/create-new-hand-handler";
 import { vikeHandler } from "./server/vike-handler";
 import { createHandler, createMiddleware } from "@universal-middleware/express";
 import { dbMiddleware } from "./server/db-middleware";
 import express from "express";
 import { createDevMiddleware } from "vike";
+import { getAllHandsHandler } from "./server/pokerHandlers/get-all-hands-handler";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const root = __dirname;
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-const hmrPort = process.env.HMR_PORT ? parseInt(process.env.HMR_PORT, 10) : 24678;
+const hmrPort = process.env.HMR_PORT
+  ? parseInt(process.env.HMR_PORT, 10)
+  : 24678;
 
 export default (await startServer()) as unknown;
 
@@ -39,7 +42,9 @@ async function startServer() {
 
   app.use(createMiddleware(dbMiddleware)());
 
-  app.post("/api/todo/create", createHandler(createTodoHandler)());
+  app.get("/api/poker/new-hand", createHandler(createNewHandHandler)());
+  app.get("/api/poker/all-hands", createHandler(getAllHandsHandler)());
+  // app.post("/api/poker/compare-hands", createHandler());
 
   /**
    * Vike route
