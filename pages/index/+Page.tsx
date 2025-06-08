@@ -12,7 +12,7 @@ import CurrentCard from "@/components/poker-components/current-card";
 
 const initialState = {
   previousHands: [] as TPokerHand[],
-  selectedHands: new Set<string>(),
+  selectedHands: new Set<number>(),
   currentHand: null,
   comparisonResult: null,
 };
@@ -25,7 +25,8 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await call(pokerApi.getAllHands);
+        const result = (await call(pokerApi.getAllHands)) as TPokerHand[];
+        result.sort((a, b) => b.id - a.id);
         dispatch({ type: ActionsType.SetPreviousHands, payload: result });
       } catch (e) {
         console.error(e);

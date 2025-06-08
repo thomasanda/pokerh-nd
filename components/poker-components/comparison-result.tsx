@@ -34,12 +34,17 @@ const ComparisonResult = ({
                     className="bg-white rounded p-2 shadow text-center min-w-[60px]"
                   >
                     <div
-                      className={`text-sm font-bold ${getSuitColor(card.suit)}`}
+                      className={`text-sm font-bold ${getSuitColor(card.suit)} mr-6`}
                     >
                       {getRank(card.rank)}
                     </div>
                     <div className={`text-lg ${getSuitColor(card.suit)}`}>
                       {getSuitSymbol(card.suit)}
+                    </div>
+                    <div
+                      className={`text-sm font-bold ${getSuitColor(card.suit)} ml-6 rotate-180`}
+                    >
+                      {getRank(card.rank)}
                     </div>
                   </div>
                 ))}

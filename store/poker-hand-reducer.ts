@@ -5,7 +5,7 @@ export type TPlayingCard = {
 };
 
 export type TPokerHand = {
-  id: string;
+  id: number;
   hand: TPlayingCard[];
   handType: string;
   timestamp: Date;
@@ -20,14 +20,14 @@ export enum ActionsType {
 
 export type TState = {
   previousHands: TPokerHand[];
-  selectedHands: Set<string>;
+  selectedHands: Set<number>;
   currentHand: TPokerHand | null;
   comparisonResult: TPokerHand | null;
 };
 
 export type TReducerAction =
   | { type: ActionsType.SetPreviousHands; payload: TPokerHand[] | [] }
-  | { type: ActionsType.SetSelectedHands; payload: Set<string> }
+  | { type: ActionsType.SetSelectedHands; payload: Set<number> }
   | { type: ActionsType.SetCurrentHand; payload: TPokerHand | null }
   | { type: ActionsType.SetComparisonResult; payload: TPokerHand | null };
 

@@ -13,11 +13,12 @@ import {
   getSuitColor,
   getSuitSymbol,
 } from "@/lib/helpers/get-card-suit.helpers";
+import { Checkbox } from "../ui/checkbox";
 
 type TPreviousHandsProps = {
   previousHands: TPokerHand[];
   dispatch: React.ActionDispatch<[action: TReducerAction]>;
-  selectedHands: Set<string>;
+  selectedHands: Set<number>;
 };
 
 const PreviousHands = ({
@@ -46,7 +47,7 @@ const PreviousHands = ({
     }
   };
 
-  const handleSelectHand = (handId: string) => {
+  const handleSelectHand = (handId: number) => {
     const newSelected = new Set(selectedHands);
     if (newSelected.has(handId)) {
       newSelected.delete(handId);
@@ -57,12 +58,24 @@ const PreviousHands = ({
     dispatch({ type: ActionsType.SetSelectedHands, payload: newSelected });
     dispatch({ type: ActionsType.SetComparisonResult, payload: null });
   };
+
+  const handleSelectAll = () => {
+    let allIds;
+    if (selectedHands.size === previousHands.length) {
+      allIds = new Set<number>();
+    } else {
+      allIds = new Set(previousHands.map((h) => h.id));
+    }
+
+    dispatch({ type: ActionsType.SetSelectedHands, payload: allIds });
+    dispatch({ type: ActionsType.SetComparisonResult, payload: null });
+  };
   return (
     <div className="space-y-4">
       <Card className="bg-white/10 backdrop-blur border-white/20">
         <CardHeader>
           <CardTitle className="text-white">Tidligere hender</CardTitle>
-          <div className="flex gap-2">
+          <div className="flex items-center justify-between">
             <Button
               onClick={handleCompareHands}
               disabled={selectedHands.size < 2}
@@ -71,6 +84,7 @@ const PreviousHands = ({
             >
               Sammenlign hender ({selectedHands.size})
             </Button>
+            <Checkbox className="m-3" onCheckedChange={handleSelectAll} />
           </div>
         </CardHeader>
         <CardContent>
@@ -93,11 +107,9 @@ const PreviousHands = ({
                     >
                       {hand.handType}
                     </Badge>
-                    <input
-                      type="checkbox"
+                    <Checkbox
                       checked={selectedHands.has(hand.id)}
-                      onChange={(e) => {
-                        e.stopPropagation();
+                      onCheckedChange={() => {
                         handleSelectHand(hand.id);
                       }}
                       className="rounded"
@@ -109,11 +121,18 @@ const PreviousHands = ({
                         key={index}
                         className="bg-white rounded text-xs p-1 text-center min-w-[30px]"
                       >
-                        <div className={`font-bold ${getSuitColor(card.suit)}`}>
+                        <div
+                          className={`font-bold ${getSuitColor(card.suit)} mr-3`}
+                        >
                           {getRank(card.rank)}
                         </div>
                         <div className={getSuitColor(card.suit)}>
                           {getSuitSymbol(card.suit)}
+                        </div>
+                        <div
+                          className={`font-bold ${getSuitColor(card.suit)} rotate-180 ml-3`}
+                        >
+                          {getRank(card.rank)}
                         </div>
                       </div>
                     ))}

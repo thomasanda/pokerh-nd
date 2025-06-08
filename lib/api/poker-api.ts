@@ -1,7 +1,6 @@
 import type { TPokerHand } from "@/store/poker-hand-reducer";
 import { useState } from "react";
 
-// Simple API functions
 export const pokerApi = {
   getAllHands: async (): Promise<TPokerHand[]> => {
     const response = await fetch("/api/poker/all-hands");
@@ -15,7 +14,7 @@ export const pokerApi = {
     return data.result;
   },
 
-  compareHands: async (handIds: string[]) => {
+  compareHands: async (handIds: number[]) => {
     const response = await fetch("/api/poker/compare-hands", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -26,7 +25,6 @@ export const pokerApi = {
   },
 };
 
-// Simple hook for loading states
 export const usePokerApi = () => {
   const [loading, setLoading] = useState(false);
 

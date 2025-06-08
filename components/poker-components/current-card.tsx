@@ -35,7 +35,7 @@ const CurrentCard = ({
         dispatch({ type: ActionsType.SetCurrentHand, payload: result });
         dispatch({
           type: ActionsType.SetPreviousHands,
-          payload: [...previousHands, result],
+          payload: [result, ...previousHands],
         });
       }
     } catch (e) {
@@ -68,12 +68,17 @@ const CurrentCard = ({
                   className="bg-white rounded-lg p-3 shadow-lg border-2 border-gray-200 min-w-[80px] text-center transform hover:scale-105 transition-transform"
                 >
                   <div
-                    className={`text-2xl font-bold ${getSuitColor(card.suit)}`}
+                    className={`text-2xl font-bold ${getSuitColor(card.suit)} mr-10`}
                   >
                     {getRank(card.rank)}
                   </div>
                   <div className={`text-3xl ${getSuitColor(card.suit)}`}>
                     {getSuitSymbol(card.suit)}
+                  </div>
+                  <div
+                    className={`text-2xl font-bold ${getSuitColor(card.suit)} ml-10 rotate-180`}
+                  >
+                    {getRank(card.rank)}
                   </div>
                 </div>
               ))}
