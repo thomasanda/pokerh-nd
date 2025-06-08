@@ -1,6 +1,6 @@
 import type { TPokerHand } from "@/server/types/poker-types";
 import type { Database } from "better-sqlite3";
-import { TPokerHandDbType } from "../types/poker-types.db";
+import { TPokerHandDbType } from "@/database/sqlite/types/poker-types.db";
 
 export const insertNewHand = (db: Database, hand: TPokerHand) => {
   return db

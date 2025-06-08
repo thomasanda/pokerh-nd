@@ -13,7 +13,7 @@ import {
   getSuitColor,
   getSuitSymbol,
 } from "@/lib/helpers/get-card-suit.helpers";
-import { Checkbox } from "../ui/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type TPreviousHandsProps = {
   previousHands: TPokerHand[];
