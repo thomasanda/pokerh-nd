@@ -37,6 +37,7 @@ const CurrentCard = ({
           type: ActionsType.SetPreviousHands,
           payload: [result, ...previousHands],
         });
+        dispatch({ type: ActionsType.SetComparisonResult, payload: null });
       }
     } catch (e) {
       console.error(e);
@@ -54,7 +55,7 @@ const CurrentCard = ({
             className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
           >
             <Shuffle className="mr-2 h-4 w-4" />
-            "Generer pokerhånd"
+            Generer pokerhånd
           </Button>
         </div>
       </CardHeader>

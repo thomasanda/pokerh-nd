@@ -84,7 +84,11 @@ const PreviousHands = ({
             >
               Sammenlign hender ({selectedHands.size})
             </Button>
-            <Checkbox className="m-3" onCheckedChange={handleSelectAll} />
+            <Checkbox
+              className="m-3"
+              onCheckedChange={handleSelectAll}
+              checked={selectedHands.size === previousHands.length}
+            />
           </div>
         </CardHeader>
         <CardContent>
