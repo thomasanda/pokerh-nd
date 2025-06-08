@@ -30,7 +30,6 @@ const PreviousHands = ({
 
   const handleDisplayHand = (hand: TPokerHand) => {
     dispatch({ type: ActionsType.SetCurrentHand, payload: hand });
-    dispatch({ type: ActionsType.SetComparisonResult, payload: null });
   };
 
   const handleCompareHands = async () => {
@@ -56,7 +55,6 @@ const PreviousHands = ({
     }
 
     dispatch({ type: ActionsType.SetSelectedHands, payload: newSelected });
-    dispatch({ type: ActionsType.SetComparisonResult, payload: null });
   };
 
   const handleSelectAll = () => {
@@ -68,7 +66,6 @@ const PreviousHands = ({
     }
 
     dispatch({ type: ActionsType.SetSelectedHands, payload: allIds });
-    dispatch({ type: ActionsType.SetComparisonResult, payload: null });
   };
   return (
     <div className="space-y-4">
@@ -87,7 +84,10 @@ const PreviousHands = ({
             <Checkbox
               className="m-3"
               onCheckedChange={handleSelectAll}
-              checked={selectedHands.size === previousHands.length}
+              checked={
+                selectedHands.size === previousHands.length &&
+                previousHands.length !== 0
+              }
             />
           </div>
         </CardHeader>

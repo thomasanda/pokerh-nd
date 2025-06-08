@@ -11,7 +11,9 @@ export const insertNewHand = (db: Database, hand: TPokerHand) => {
 };
 
 export const getAllHands = (db: Database) => {
-  return db.prepare("SELECT id, hand, hand_type FROM hands").all();
+  return db
+    .prepare("SELECT id, hand, hand_type FROM hands ORDER BY id DESC")
+    .all();
 };
 
 export const getHandsById = (db: Database, ids: number[]) => {

@@ -32,12 +32,10 @@ const CurrentCard = ({
     try {
       const result = await call(pokerApi.generateNewHand);
       if (result) {
-        dispatch({ type: ActionsType.SetCurrentHand, payload: result });
         dispatch({
-          type: ActionsType.SetPreviousHands,
-          payload: [result, ...previousHands],
+          type: ActionsType.UpdateCurrentAndPrevious,
+          payload: { result, previousHands },
         });
-        dispatch({ type: ActionsType.SetComparisonResult, payload: null });
       }
     } catch (e) {
       console.error(e);
@@ -66,7 +64,7 @@ const CurrentCard = ({
               {currentHand.hand.map((card: TPlayingCard, index: number) => (
                 <div
                   key={index}
-                  className="bg-white rounded-lg p-3 shadow-lg border-2 border-gray-200 min-w-[80px] text-center transform hover:scale-105 transition-transform"
+                  className="bg-white rounded-lg p-3 shadow-lg border-2 border-gray-200 min-w-[80px] text-center transform hover:scale-105 transition-transform duration-500"
                 >
                   <div
                     className={`text-2xl font-bold ${getSuitColor(card.suit)} mr-10`}

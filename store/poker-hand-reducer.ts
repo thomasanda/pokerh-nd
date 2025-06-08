@@ -16,6 +16,7 @@ export enum ActionsType {
   SetSelectedHands = "SetSelectedHands",
   SetCurrentHand = "SetCurrentHand",
   SetComparisonResult = "SetComparisonResult",
+  UpdateCurrentAndPrevious = "UpdateCurrentAndPrevious",
 }
 
 export type TState = {
@@ -29,7 +30,11 @@ export type TReducerAction =
   | { type: ActionsType.SetPreviousHands; payload: TPokerHand[] | [] }
   | { type: ActionsType.SetSelectedHands; payload: Set<number> }
   | { type: ActionsType.SetCurrentHand; payload: TPokerHand | null }
-  | { type: ActionsType.SetComparisonResult; payload: TPokerHand | null };
+  | { type: ActionsType.SetComparisonResult; payload: TPokerHand | null }
+  | {
+      type: ActionsType.UpdateCurrentAndPrevious;
+      payload: { result: TPokerHand; previousHands: TPokerHand[] };
+    };
 
 export const pokerHandReducer = (
   state: TState,
@@ -39,11 +44,23 @@ export const pokerHandReducer = (
     case ActionsType.SetPreviousHands:
       return { ...state, previousHands: action.payload };
     case ActionsType.SetSelectedHands:
-      return { ...state, selectedHands: action.payload };
+      return {
+        ...state,
+        selectedHands: action.payload,
+        comparisonResult: null,
+      };
     case ActionsType.SetCurrentHand:
-      return { ...state, currentHand: action.payload };
+      return { ...state, currentHand: action.payload, comparisonResult: null };
     case ActionsType.SetComparisonResult:
       return { ...state, comparisonResult: action.payload };
+    case ActionsType.UpdateCurrentAndPrevious:
+      return {
+        ...state,
+        currentHand: action.payload.result,
+        previousHands: [action.payload.result, ...action.payload.previousHands],
+        comparisonResult: null,
+        selectedHands: new Set<number>(),
+      };
     default:
       return state;
   }

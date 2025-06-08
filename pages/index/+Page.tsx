@@ -26,7 +26,6 @@ export default function Page() {
     const fetchData = async () => {
       try {
         const result = (await call(pokerApi.getAllHands)) as TPokerHand[];
-        result.sort((a, b) => b.id - a.id);
         dispatch({ type: ActionsType.SetPreviousHands, payload: result });
       } catch (e) {
         console.error(e);
