@@ -7,6 +7,8 @@ RUN npm ci
 
 COPY . .
 
+RUN echo 'DATABASE_URL="sqlite.db"' > .env
+
 RUN npm run sqlite:migrate
 RUN npm run build
 
