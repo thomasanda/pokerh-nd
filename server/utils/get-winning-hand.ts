@@ -38,7 +38,6 @@ export const getWinningHand = (hands: TInputHand[]) => {
       return findBestHand(bestHands, (hand) => getHandValues(hand, [3]));
     }
     case HandType.ToPar:
-      return findBestHand(bestHands, (hand) => getHandValues(hand, [2, 2]));
     case HandType.Par:
       return findBestHand(bestHands, (hand) => getHandValues(hand, [2]));
   }
