@@ -6,8 +6,8 @@ import { TPokerHandDbType } from "@/database/sqlite/types/poker-types.db";
 export const getAllHandsHandler: Get<
   [],
   UniversalHandler<Universal.Context & { db: ReturnType<typeof sqliteDb> }>
-> = () => async (_request, _context) => {
-  const results = sqliteQueries.getAllHands(_context.db) as TPokerHandDbType[];
+> = () => async (_request, context) => {
+  const results = sqliteQueries.getAllHands(context.db) as TPokerHandDbType[];
 
   const hands = results.map((row) => ({
     id: row.id,

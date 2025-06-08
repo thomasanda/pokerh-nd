@@ -5,7 +5,8 @@
     "preview": "cross-env NODE_ENV=production tsx ./express-entry.ts",
     "shadcn": "npx shadcn@latest",
     "sqlite:migrate": "tsx ./database/sqlite/schema/hands.ts",
-    "test": "npx vitest"
+    "test": "npx vitest",
+    "start": "cross-env NODE_ENV=production tsx ./express-entry.ts"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.2",

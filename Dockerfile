@@ -1,29 +1,31 @@
-# Use Node.js official image
-FROM node:18-alpine
+# Build stage
+FROM node:22 AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
+RUN npm ci
 
-# Install dependencies
-RUN npm ci --only=production
-
-# Copy source code
 COPY . .
-
-#Run migration
 RUN npm run sqlite:migrate
-
-#Shadcn
-RUN npm run shadcn
-
-# Build the application
+RUN npx shadcn@latest add badge button card scroll-area
 RUN npm run build
 
-# Expose port (adjust if your app uses a different port)
+# Production stage
+FROM node:22
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/express-entry.ts ./express-entry.ts
+COPY --from=builder /app/database ./database
+COPY --from=builder /app/.env ./.env
+COPY --from=builder /app/server ./server
+
 EXPOSE 3000
 
-# Start the application
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "start"]

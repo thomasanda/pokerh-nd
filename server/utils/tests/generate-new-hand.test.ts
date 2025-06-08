@@ -3,7 +3,7 @@ import { test, expect } from "vitest";
 
 test("generateNewHand returns a valid hand", () => {
   const hand = generateNewHand();
-  expect(hand).toHaveProperty("cards");
+  expect(hand).toHaveProperty("hand");
   expect(hand).toHaveProperty("handType");
   expect(Array.isArray(hand.hand)).toBe(true);
   expect(hand.hand.length).toBe(5);

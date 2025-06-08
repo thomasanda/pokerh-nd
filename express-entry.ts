@@ -9,6 +9,7 @@ import { dbMiddleware } from "./server/db-middleware";
 import express from "express";
 import { createDevMiddleware } from "vike";
 import { getAllHandsHandler } from "./server/pokerHandlers/get-all-hands-handler";
+import { compareHandsHandler } from "./server/pokerHandlers/compare-hands-handler";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -44,7 +45,7 @@ async function startServer() {
 
   app.get("/api/poker/new-hand", createHandler(createNewHandHandler)());
   app.get("/api/poker/all-hands", createHandler(getAllHandsHandler)());
-  // app.post("/api/poker/compare-hands", createHandler());
+  app.post("/api/poker/compare-hands", createHandler(compareHandsHandler)());
 
   /**
    * Vike route

@@ -13,8 +13,8 @@ const ranks = [
   { rank: "9", value: 9 },
   { rank: "t", value: 10 },
   { rank: "j", value: 11 },
-  { rank: "k", value: 12 },
-  { rank: "q", value: 13 },
+  { rank: "q", value: 12 },
+  { rank: "k", value: 13 },
   { rank: "a", value: 14 },
 ];
 
